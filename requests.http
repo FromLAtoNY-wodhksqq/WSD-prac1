@@ -1,0 +1,78 @@
+### IntelliJ HTTP Client 요청 모음
+### 서버를 실행한 뒤, 각 요청 왼쪽의 ▶ 버튼으로 실행합니다. (위에서부터 순서대로 실행하면 흐름이 이어집니다)
+
+@host = http://localhost:8080
+
+### 3) POST 상품 등록 (201)
+POST {{host}}/api/items
+Content-Type: application/json
+
+{"name": "사과", "price": 1000}
+
+### 3) POST 상품 등록 - 두 번째 (201)
+POST {{host}}/api/items
+Content-Type: application/json
+
+{"name": "배", "price": 2000}
+
+### 4) POST 상품 복제 (201)
+POST {{host}}/api/items/1/copy
+
+### 1) GET 목록 조회 (200)
+GET {{host}}/api/items
+
+### 1) GET 목록 조회 - 검색 (200)
+GET {{host}}/api/items?keyword=%EB%B3%B5%EC%82%AC
+
+### 2) GET 단건 조회 (200)
+GET {{host}}/api/items/1
+
+### 5) PUT 전체 수정 (200)
+PUT {{host}}/api/items/1
+Content-Type: application/json
+
+{"name": "청사과", "price": 1500}
+
+### 6) PUT 가격만 수정 (200)
+PUT {{host}}/api/items/1/price
+Content-Type: application/json
+
+{"price": 777}
+
+### 7) DELETE 상품 삭제 (200)
+DELETE {{host}}/api/items/3
+
+### 8) DELETE 전체 삭제 (200)
+DELETE {{host}}/api/items
+
+### ===================== 에러 응답 =====================
+
+### 404 없는 상품
+GET {{host}}/api/items/999
+
+### 404 없는 경로
+GET {{host}}/api/nothing
+
+### 400 입력값 검증 실패
+POST {{host}}/api/items
+Content-Type: application/json
+
+{"name": "", "price": -1}
+
+### 400 JSON 형식 오류
+POST {{host}}/api/items
+Content-Type: application/json
+
+{ 깨진 json
+
+### 400 id가 숫자가 아님
+GET {{host}}/api/items/abc
+
+### 405 허용되지 않는 메서드
+PATCH {{host}}/api/items/1
+
+### 503 서비스 불가 (시연용)
+GET {{host}}/api/demo/unavailable
+
+### 500 서버 오류 (시연용)
+GET {{host}}/api/demo/server-error
